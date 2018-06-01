@@ -1,4 +1,3 @@
-subroutine cosmo( star, cart, phi, glm, psi, sigma, esolv )
 !
 !---------------------------------------------------------------------------------------
 ! Purpose : wrapper for the linear solvers for COSMO equation
@@ -56,23 +55,29 @@ subroutine cosmo( star, cart, phi, glm, psi, sigma, esolv )
 !   - if star is false, computes the solvation energy.
 !---------------------------------------------------------------------------------------
 !
-      use ddcosmo , only : iprint, ncav, nylm, nsph, iconv, zero, ngrid, ndiis,      &
-                           wghpot, intrhs, facl, pt5, eps, sprod, iout, one, prtsph
-!      
-      implicit none
+!
+module cosmoWrapper
+use jacobiDIIS
+use matvec
+use ddcosmo , only : iprint, ncav, nylm, nsph, iconv, zero, ngrid, ndiis, &
+    wghpot, intrhs, facl, pt5, eps, sprod, iout, one, prtsph, dp
+implicit none
+
+contains
+
+subroutine cosmo( star, cart, phi, glm, psi, sigma, esolv )
+
       logical,                         intent(in)    :: star, cart
-      real*8,  dimension(ncav),        intent(in)    :: phi
-      real*8,  dimension(nylm,nsph), intent(in)      :: glm, psi
-      real*8,  dimension(nylm,nsph), intent(inout)   :: sigma
-      real*8,                          intent(inout) :: esolv
+      real(dp),  dimension(ncav),        intent(in)    :: phi
+      real(dp),  dimension(nylm,nsph), intent(in)      :: glm, psi
+      real(dp),  dimension(nylm,nsph), intent(inout)   :: sigma
+      real(dp),                          intent(inout) :: esolv
 !
       integer              :: isph, istatus, n_iter, info, c1, c2, cr
-      real*8               :: tol, r_norm
+      real(dp)               :: tol, r_norm
       logical              :: ok
 !
-      real*8, allocatable  :: g(:,:), rhs(:,:), work(:,:)
-!
-      external             :: lx, ldm1x, hnorm, lstarx
+      real(dp), allocatable  :: g(:,:), rhs(:,:), work(:,:)
 !
 !---------------------------------------------------------------------------------------
 !
@@ -223,4 +228,6 @@ subroutine cosmo( star, cart, phi, glm, psi, sigma, esolv )
       endif
 !
 !
-endsubroutine cosmo
+end subroutine cosmo
+
+end module cosmoWrapper

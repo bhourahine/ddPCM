@@ -1,5 +1,3 @@
-subroutine efld(nsrc,src,csrc,ntrg,ctrg,ef)
-implicit none
 ! 
 !      888      888  .d8888b.   .d88888b.   .d8888b.  888b     d888  .d88888b.  
 !      888      888 d88P  Y88b d88P" "Y88b d88P  Y88b 8888b   d8888 d88P" "Y88b 
@@ -84,15 +82,27 @@ implicit none
 !                                                                              !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
+module efield
+use ddcosmo, only : dp
+implicit none
+
+private
+public :: efld
+
+contains
+
+subroutine efld(nsrc,src,csrc,ntrg,ctrg,ef)
+
 integer,                    intent(in)    :: nsrc, ntrg
-real*8,  dimension(nsrc),   intent(in)    :: src
-real*8,  dimension(3,nsrc), intent(in)    :: csrc
-real*8,  dimension(3,ntrg), intent(in)    :: ctrg
-real*8,  dimension(3,ntrg), intent(inout) :: ef
+integer,   parameter                        :: dp = kind(0.0d0)
+real(dp),  dimension(nsrc),   intent(in)    :: src
+real(dp),  dimension(3,nsrc), intent(in)    :: csrc
+real(dp),  dimension(3,ntrg), intent(in)    :: ctrg
+real(dp),  dimension(3,ntrg), intent(inout) :: ef
 !
 integer :: i, j
-real*8  :: dx, dy, dz, r2, rr, r3, f, e(3)
-real*8, parameter :: zero=0.0d0
+real(dp)  :: dx, dy, dz, r2, rr, r3, f, e(3)
+real(dp), parameter :: zero=0.0d0
 !
 ef = zero
 !$omp parallel do default(shared) private(j,i,dx,dy,dz,r2,rr,r3,e)
@@ -113,4 +123,6 @@ do j = 1, ntrg
   ef(:,j) = e
 end do
 return
-end
+end subroutine efld
+
+end module efield

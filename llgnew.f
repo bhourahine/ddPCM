@@ -3,11 +3,11 @@ c     routine to generate the lebedev-laikov grid (g and w for the weights array
 c     with the closest number of points from ng
 c
       subroutine llgrid(ngrid,w,grid)
-      implicit real*8 (a-h,o-z)
+      implicit double precision (a-h,o-z)
       parameter(nllg=32,ngmax=5810)
       integer n,igrid,i,ng0(nllg),inear,jnear,ig
-      real*8 w(*),grid(3,*), four
-      real*8 wtemp(ngmax),x(ngmax),y(ngmax),z(ngmax)
+      double precision w(*),grid(3,*), four
+      double precision wtemp(ngmax),x(ngmax),y(ngmax),z(ngmax)
       save one, four
       data one/1.0d0/, four /4.0d0/
 c
@@ -92,7 +92,7 @@ c
 
        subroutine gen_oh(code, num, x, y, z, wtemp, a, b, v)
        implicit logical(a-z)
-       real*8 x(*),y(*),z(*),wtemp(*)
+       double precision x(*),y(*),z(*),wtemp(*)
        double precision a,b,v
        integer code
        integer num
@@ -680,10 +680,10 @@ cvwtemp
        end
 
        SUBROUTINE LD0006(X,Y,Z,W,N)
-       REAL*8 X(   6)
-       REAL*8 Y(   6)
-       REAL*8 Z(   6)
-       REAL*8 W(   6)
+       DOUBLE PRECISION X(   6)
+       DOUBLE PRECISION Y(   6)
+       DOUBLE PRECISION Z(   6)
+       DOUBLE PRECISION W(   6)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -740,10 +740,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0014(X,Y,Z,W,N)
-       REAL*8 X(  14)
-       REAL*8 Y(  14)
-       REAL*8 Z(  14)
-       REAL*8 W(  14)
+       DOUBLE PRECISION X(  14)
+       DOUBLE PRECISION Y(  14)
+       DOUBLE PRECISION Z(  14)
+       DOUBLE PRECISION W(  14)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -802,10 +802,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0026(X,Y,Z,W,N)
-       REAL*8 X(  26)
-       REAL*8 Y(  26)
-       REAL*8 Z(  26)
-       REAL*8 W(  26)
+       DOUBLE PRECISION X(  26)
+       DOUBLE PRECISION Y(  26)
+       DOUBLE PRECISION Z(  26)
+       DOUBLE PRECISION W(  26)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -866,10 +866,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0038(X,Y,Z,W,N)
-       REAL*8 X(  38)
-       REAL*8 Y(  38)
-       REAL*8 Z(  38)
-       REAL*8 W(  38)
+       DOUBLE PRECISION X(  38)
+       DOUBLE PRECISION Y(  38)
+       DOUBLE PRECISION Z(  38)
+       DOUBLE PRECISION W(  38)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -931,10 +931,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0050(X,Y,Z,W,N)
-       REAL*8 X(  50)
-       REAL*8 Y(  50)
-       REAL*8 Z(  50)
-       REAL*8 W(  50)
+       DOUBLE PRECISION X(  50)
+       DOUBLE PRECISION Y(  50)
+       DOUBLE PRECISION Z(  50)
+       DOUBLE PRECISION W(  50)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -998,10 +998,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0074(X,Y,Z,W,N)
-       REAL*8 X(  74)
-       REAL*8 Y(  74)
-       REAL*8 Z(  74)
-       REAL*8 W(  74)
+       DOUBLE PRECISION X(  74)
+       DOUBLE PRECISION Y(  74)
+       DOUBLE PRECISION Z(  74)
+       DOUBLE PRECISION W(  74)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1068,10 +1068,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0086(X,Y,Z,W,N)
-       REAL*8 X(  86)
-       REAL*8 Y(  86)
-       REAL*8 Z(  86)
-       REAL*8 W(  86)
+       DOUBLE PRECISION X(  86)
+       DOUBLE PRECISION Y(  86)
+       DOUBLE PRECISION Z(  86)
+       DOUBLE PRECISION W(  86)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1139,10 +1139,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0110(X,Y,Z,W,N)
-       REAL*8 X( 110)
-       REAL*8 Y( 110)
-       REAL*8 Z( 110)
-       REAL*8 W( 110)
+       DOUBLE PRECISION X( 110)
+       DOUBLE PRECISION Y( 110)
+       DOUBLE PRECISION Z( 110)
+       DOUBLE PRECISION W( 110)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1213,10 +1213,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0146(X,Y,Z,W,N)
-       REAL*8 X( 146)
-       REAL*8 Y( 146)
-       REAL*8 Z( 146)
-       REAL*8 W( 146)
+       DOUBLE PRECISION X( 146)
+       DOUBLE PRECISION Y( 146)
+       DOUBLE PRECISION Z( 146)
+       DOUBLE PRECISION W( 146)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1290,10 +1290,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0170(X,Y,Z,W,N)
-       REAL*8 X( 170)
-       REAL*8 Y( 170)
-       REAL*8 Z( 170)
-       REAL*8 W( 170)
+       DOUBLE PRECISION X( 170)
+       DOUBLE PRECISION Y( 170)
+       DOUBLE PRECISION Z( 170)
+       DOUBLE PRECISION W( 170)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1370,10 +1370,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0194(X,Y,Z,W,N)
-       REAL*8 X( 194)
-       REAL*8 Y( 194)
-       REAL*8 Z( 194)
-       REAL*8 W( 194)
+       DOUBLE PRECISION X( 194)
+       DOUBLE PRECISION Y( 194)
+       DOUBLE PRECISION Z( 194)
+       DOUBLE PRECISION W( 194)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1453,10 +1453,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0230(X,Y,Z,W,N)
-       REAL*8 X( 230)
-       REAL*8 Y( 230)
-       REAL*8 Z( 230)
-       REAL*8 W( 230)
+       DOUBLE PRECISION X( 230)
+       DOUBLE PRECISION Y( 230)
+       DOUBLE PRECISION Z( 230)
+       DOUBLE PRECISION W( 230)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1540,10 +1540,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0266(X,Y,Z,W,N)
-       REAL*8 X( 266)
-       REAL*8 Y( 266)
-       REAL*8 Z( 266)
-       REAL*8 W( 266)
+       DOUBLE PRECISION X( 266)
+       DOUBLE PRECISION Y( 266)
+       DOUBLE PRECISION Z( 266)
+       DOUBLE PRECISION W( 266)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1630,10 +1630,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0302(X,Y,Z,W,N)
-       REAL*8 X( 302)
-       REAL*8 Y( 302)
-       REAL*8 Z( 302)
-       REAL*8 W( 302)
+       DOUBLE PRECISION X( 302)
+       DOUBLE PRECISION Y( 302)
+       DOUBLE PRECISION Z( 302)
+       DOUBLE PRECISION W( 302)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1724,10 +1724,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0350(X,Y,Z,W,N)
-       REAL*8 X( 350)
-       REAL*8 Y( 350)
-       REAL*8 Z( 350)
-       REAL*8 W( 350)
+       DOUBLE PRECISION X( 350)
+       DOUBLE PRECISION Y( 350)
+       DOUBLE PRECISION Z( 350)
+       DOUBLE PRECISION W( 350)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1822,10 +1822,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0434(X,Y,Z,W,N)
-       REAL*8 X( 434)
-       REAL*8 Y( 434)
-       REAL*8 Z( 434)
-       REAL*8 W( 434)
+       DOUBLE PRECISION X( 434)
+       DOUBLE PRECISION Y( 434)
+       DOUBLE PRECISION Z( 434)
+       DOUBLE PRECISION W( 434)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -1929,10 +1929,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0590(X,Y,Z,W,N)
-       REAL*8 X( 590)
-       REAL*8 Y( 590)
-       REAL*8 Z( 590)
-       REAL*8 W( 590)
+       DOUBLE PRECISION X( 590)
+       DOUBLE PRECISION Y( 590)
+       DOUBLE PRECISION Z( 590)
+       DOUBLE PRECISION W( 590)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2051,10 +2051,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0770(X,Y,Z,W,N)
-       REAL*8 X( 770)
-       REAL*8 Y( 770)
-       REAL*8 Z( 770)
-       REAL*8 W( 770)
+       DOUBLE PRECISION X( 770)
+       DOUBLE PRECISION Y( 770)
+       DOUBLE PRECISION Z( 770)
+       DOUBLE PRECISION W( 770)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2190,10 +2190,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD0974(X,Y,Z,W,N)
-       REAL*8 X( 974)
-       REAL*8 Y( 974)
-       REAL*8 Z( 974)
-       REAL*8 W( 974)
+       DOUBLE PRECISION X( 974)
+       DOUBLE PRECISION Y( 974)
+       DOUBLE PRECISION Z( 974)
+       DOUBLE PRECISION W( 974)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2348,10 +2348,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD1202(X,Y,Z,W,N)
-       REAL*8 X(1202)
-       REAL*8 Y(1202)
-       REAL*8 Z(1202)
-       REAL*8 W(1202)
+       DOUBLE PRECISION X(1202)
+       DOUBLE PRECISION Y(1202)
+       DOUBLE PRECISION Z(1202)
+       DOUBLE PRECISION W(1202)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2527,10 +2527,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD1454(X,Y,Z,W,N)
-       REAL*8 X(1454)
-       REAL*8 Y(1454)
-       REAL*8 Z(1454)
-       REAL*8 W(1454)
+       DOUBLE PRECISION X(1454)
+       DOUBLE PRECISION Y(1454)
+       DOUBLE PRECISION Z(1454)
+       DOUBLE PRECISION W(1454)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2729,10 +2729,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD1730(X,Y,Z,W,N)
-       REAL*8 X(1730)
-       REAL*8 Y(1730)
-       REAL*8 Z(1730)
-       REAL*8 W(1730)
+       DOUBLE PRECISION X(1730)
+       DOUBLE PRECISION Y(1730)
+       DOUBLE PRECISION Z(1730)
+       DOUBLE PRECISION W(1730)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -2956,10 +2956,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD2030(X,Y,Z,W,N)
-       REAL*8 X(2030)
-       REAL*8 Y(2030)
-       REAL*8 Z(2030)
-       REAL*8 W(2030)
+       DOUBLE PRECISION X(2030)
+       DOUBLE PRECISION Y(2030)
+       DOUBLE PRECISION Z(2030)
+       DOUBLE PRECISION W(2030)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -3210,10 +3210,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD2354(X,Y,Z,W,N)
-       REAL*8 X(2354)
-       REAL*8 Y(2354)
-       REAL*8 Z(2354)
-       REAL*8 W(2354)
+       DOUBLE PRECISION X(2354)
+       DOUBLE PRECISION Y(2354)
+       DOUBLE PRECISION Z(2354)
+       DOUBLE PRECISION W(2354)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -3493,10 +3493,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD2702(X,Y,Z,W,N)
-       REAL*8 X(2702)
-       REAL*8 Y(2702)
-       REAL*8 Z(2702)
-       REAL*8 W(2702)
+       DOUBLE PRECISION X(2702)
+       DOUBLE PRECISION Y(2702)
+       DOUBLE PRECISION Z(2702)
+       DOUBLE PRECISION W(2702)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -3807,10 +3807,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD3074(X,Y,Z,W,N)
-       REAL*8 X(3074)
-       REAL*8 Y(3074)
-       REAL*8 Z(3074)
-       REAL*8 W(3074)
+       DOUBLE PRECISION X(3074)
+       DOUBLE PRECISION Y(3074)
+       DOUBLE PRECISION Z(3074)
+       DOUBLE PRECISION W(3074)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -4154,10 +4154,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD3470(X,Y,Z,W,N)
-       REAL*8 X(3470)
-       REAL*8 Y(3470)
-       REAL*8 Z(3470)
-       REAL*8 W(3470)
+       DOUBLE PRECISION X(3470)
+       DOUBLE PRECISION Y(3470)
+       DOUBLE PRECISION Z(3470)
+       DOUBLE PRECISION W(3470)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -4536,10 +4536,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD3890(X,Y,Z,W,N)
-       REAL*8 X(3890)
-       REAL*8 Y(3890)
-       REAL*8 Z(3890)
-       REAL*8 W(3890)
+       DOUBLE PRECISION X(3890)
+       DOUBLE PRECISION Y(3890)
+       DOUBLE PRECISION Z(3890)
+       DOUBLE PRECISION W(3890)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -4955,10 +4955,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD4334(X,Y,Z,W,N)
-       REAL*8 X(4334)
-       REAL*8 Y(4334)
-       REAL*8 Z(4334)
-       REAL*8 W(4334)
+       DOUBLE PRECISION X(4334)
+       DOUBLE PRECISION Y(4334)
+       DOUBLE PRECISION Z(4334)
+       DOUBLE PRECISION W(4334)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -5413,10 +5413,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD4802(X,Y,Z,W,N)
-       REAL*8 X(4802)
-       REAL*8 Y(4802)
-       REAL*8 Z(4802)
-       REAL*8 W(4802)
+       DOUBLE PRECISION X(4802)
+       DOUBLE PRECISION Y(4802)
+       DOUBLE PRECISION Z(4802)
+       DOUBLE PRECISION W(4802)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -5912,10 +5912,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD5294(X,Y,Z,W,N)
-       REAL*8 X(5294)
-       REAL*8 Y(5294)
-       REAL*8 Z(5294)
-       REAL*8 W(5294)
+       DOUBLE PRECISION X(5294)
+       DOUBLE PRECISION Y(5294)
+       DOUBLE PRECISION Z(5294)
+       DOUBLE PRECISION W(5294)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW
@@ -6454,10 +6454,10 @@ chvd
        RETURN
        END
        SUBROUTINE LD5810(X,Y,Z,W,N)
-       REAL*8 X(5810)
-       REAL*8 Y(5810)
-       REAL*8 Z(5810)
-       REAL*8 W(5810)
+       DOUBLE PRECISION X(5810)
+       DOUBLE PRECISION Y(5810)
+       DOUBLE PRECISION Z(5810)
+       DOUBLE PRECISION W(5810)
        INTEGER N
        DOUBLE PRECISION A,B,V
 CVW

@@ -1,5 +1,3 @@
-program main
-use ddcosmo
 ! 
 !      888      888  .d8888b.   .d88888b.   .d8888b.  888b     d888  .d88888b.  
 !      888      888 d88P  Y88b d88P" "Y88b d88P  Y88b 8888b   d8888 d88P" "Y88b 
@@ -92,30 +90,37 @@ use ddcosmo
 ! his/her routines to compute the molecular electrostatic quantities.          !
 !                                                                              !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+program main
+use ddcosmo
+use efield
+use rhsExample
+use forcesExample
+use cosmoWrapper
 implicit none
 !
 integer :: i, ii, isph, ig, n
-real*8  :: tobohr, esolv, xx(1)
-real*8, parameter :: toang=0.52917721092d0, tokcal=627.509469d0
+real(dp)  :: tobohr, esolv, xx(1)
+real(dp), parameter :: toang=0.52917721092d0, tokcal=627.509469d0
 !
 ! quantities to be allocated by the user.
 ! - solute's parameters, such as coordinates, vdw radii and
 !   point charges used to model the solute (or multipoles, or
 !   qm density...)
 !
-real*8, allocatable :: x(:), y(:), z(:), rvdw(:), charge(:)
+real(dp), allocatable :: x(:), y(:), z(:), rvdw(:), charge(:)
 !
 ! - electrostatic potential phi(ncav) and psi vector psi(nylm,n)
 !
-real*8, allocatable :: phi(:), psi(:,:)
+real(dp), allocatable :: phi(:), psi(:,:)
 !
 ! - ddcosmo solution sigma (nylm,n) and adjoint solution s(nylm,n)
 !
-real*8, allocatable :: sigma(:,:), s(:,:)
+real(dp), allocatable :: sigma(:,:), s(:,:)
 !
 ! - forces:
 !
-real*8, allocatable :: fx(:,:), zeta(:), ef(:,:)
+real(dp), allocatable :: fx(:,:), zeta(:), ef(:,:)
 !
 ! - for qm solutes, fock matrix contribution.
 !

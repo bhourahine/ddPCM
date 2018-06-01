@@ -1,5 +1,3 @@
-subroutine mkrhs(n,charge,x,y,z,ncav,ccav,phi,nylm,psi)
-implicit none
 ! 
 !      888      888  .d8888b.   .d88888b.   .d8888b.  888b     d888  .d88888b.  
 !      888      888 d88P  Y88b d88P" "Y88b d88P  Y88b 8888b   d8888 d88P" "Y88b 
@@ -83,16 +81,25 @@ implicit none
 !                                                                              !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
+module rhsExample
+use ddcosmo, only : dp
+implicit none
+
+private
+public :: mkrhs
+
+contains
+subroutine mkrhs(n,charge,x,y,z,ncav,ccav,phi,nylm,psi)
 integer,                      intent(in)    :: n, ncav, nylm
-real*8,  dimension(n),        intent(in)    :: x, y, z, charge
-real*8,  dimension(3,ncav),   intent(in)    :: ccav
-real*8,  dimension(ncav),     intent(inout) :: phi
-real*8,  dimension(nylm,n),   intent(inout) :: psi
+real(dp),  dimension(n),        intent(in)    :: x, y, z, charge
+real(dp),  dimension(3,ncav),   intent(in)    :: ccav
+real(dp),  dimension(ncav),     intent(inout) :: phi
+real(dp),  dimension(nylm,n),   intent(inout) :: psi
 !
 integer :: isph, ic, j
-real*8  :: v
-real*8  :: dx, dy, dz, d2, d, pi, fac
-real*8, parameter :: zero=0.0d0, one=1.0d0, four=4.0d0
+real(dp)  :: v
+real(dp)  :: dx, dy, dz, d2, d, pi, fac
+real(dp), parameter :: zero=0.0d0, one=1.0d0, four=4.0d0
 !
 pi  = four*atan(one)
 fac = sqrt(four*pi)
@@ -120,4 +127,6 @@ do isph = 1, n
 end do
 !
 return
-end
+end subroutine mkrhs
+
+end module rhsExample

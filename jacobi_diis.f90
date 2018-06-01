@@ -40,25 +40,35 @@
 !              format: real*8 function u_norm(n,x)
 !
 !---------------------------------------------------------------------------------------------
+
+module jacobiDIIS
+  implicit none
+
+  private
+  public :: jacobi_diis, rmsvec
+
+  integer, parameter :: dp = kind(0.0d0)
+
+contains
+
 subroutine jacobi_diis( n, lprint, diis_max, norm, tol, rhs, x, n_iter, ok, matvec, &
                         dm1vec, u_norm)
 !                
-      implicit none
       integer,               intent(in)    :: n, diis_max, norm, lprint
-      real*8,                intent(in)    :: tol
-      real*8,  dimension(n), intent(in)    :: rhs
-      real*8,  dimension(n), intent(inout) :: x
+      real(dp),                intent(in)    :: tol
+      real(dp),  dimension(n), intent(in)    :: rhs
+      real(dp),  dimension(n), intent(inout) :: x
       integer,               intent(inout) :: n_iter
       logical,               intent(inout) :: ok
       external                             :: matvec, dm1vec
-      real*8,  optional                    :: u_norm
+      real(dp),  optional                    :: u_norm
       external                             :: u_norm
 !
       integer :: it, nmat, istatus, lenb
-      real*8  :: rms_norm, max_norm, tol_max
+      real(dp)  :: rms_norm, max_norm, tol_max
       logical :: dodiis
 !
-      real*8, allocatable :: x_new(:), y(:), x_diis(:,:), e_diis(:,:), bmat(:,:)
+      real(dp), allocatable :: x_new(:), y(:), x_diis(:,:), e_diis(:,:), bmat(:,:)
 !
 !---------------------------------------------------------------------------------------------
 !
@@ -188,7 +198,7 @@ subroutine jacobi_diis( n, lprint, diis_max, norm, tol, rhs, x, n_iter, ok, matv
       return
 !
 !
-endsubroutine jacobi_diis
+end subroutine jacobi_diis
 !---------------------------------------------------------------------------------------------
 !
 !
@@ -196,20 +206,19 @@ endsubroutine jacobi_diis
 !---------------------------------------------------------------------------------------------
 !
 subroutine diis(n,nmat,ndiis,x,e,b,xnew)
-implicit none
 integer,                             intent(in)    :: n, ndiis
 integer,                             intent(inout) :: nmat
-real*8,  dimension(n,ndiis),         intent(inout) :: x, e
-real*8,  dimension(ndiis+1,ndiis+1), intent(inout) :: b
-real*8,  dimension(n),               intent(inout) :: xnew
+real(dp),  dimension(n,ndiis),         intent(inout) :: x, e
+real(dp),  dimension(ndiis+1,ndiis+1), intent(inout) :: b
+real(dp),  dimension(n),               intent(inout) :: xnew
 !
 integer :: nmat1, i, istatus
 integer :: j, k
 logical :: ok
 !
-real*8, allocatable :: bloc(:,:), cex(:)
+real(dp), allocatable :: bloc(:,:), cex(:)
 !
-real*8, parameter :: zero = 0.0d0, one = 1.0d0
+real(dp), parameter :: zero = 0.0d0, one = 1.0d0
 !
 !------------------------------------------------------------------------------
 !
@@ -256,14 +265,13 @@ return
 end subroutine diis
   !
 subroutine makeb(n,nmat,ndiis,e,b)
-implicit none
 integer, intent(in) :: n, nmat, ndiis
-real*8, dimension(n,ndiis),         intent(in) :: e
-real*8, dimension(ndiis+1,ndiis+1), intent(inout) :: b
+real(dp), dimension(n,ndiis),         intent(in) :: e
+real(dp), dimension(ndiis+1,ndiis+1), intent(inout) :: b
 !
 integer :: i
-real*8  :: bij
-real*8, parameter :: zero = 0.0d0, one = 1.0d0
+real(dp)  :: bij
+real(dp), parameter :: zero = 0.0d0, one = 1.0d0
   
 ! 1st built
 if (nmat.eq.1) then
@@ -297,19 +305,18 @@ return
 end subroutine makeb
 !
 subroutine gjinv(n,nrhs,a,b,ok)
-implicit none
 !
 integer,                    intent(in)    :: n, nrhs
 logical,                    intent(inout) :: ok
-real*8,  dimension(n,n),    intent(inout) :: a
-real*8,  dimension(n,nrhs), intent(inout) :: b
+real(dp),  dimension(n,n),    intent(inout) :: a
+real(dp),  dimension(n,nrhs), intent(inout) :: b
 !
 integer :: i, j, k, irow, icol, istatus
-real*8  :: big, dum, pinv
-real*8, parameter :: zero = 0.0d0, one = 1.0d0
+real(dp)  :: big, dum, pinv
+real(dp), parameter :: zero = 0.0d0, one = 1.0d0
 !
 integer, allocatable :: indxc(:), indxr(:), piv(:)
-real*8,  allocatable :: scr(:)
+real(dp),  allocatable :: scr(:)
 !
 allocate (indxc(n), indxr(n), piv(n) , stat=istatus)
 if ( istatus.ne.0 ) then
@@ -404,13 +411,12 @@ end subroutine gjinv
 !------------------------------------------------------------------------------
 subroutine rmsvec( n, v, vrms, vmax )
 !
-      implicit none
       integer,               intent(in)    :: n
-      real*8,  dimension(n), intent(in)    :: v
-      real*8,                intent(inout) :: vrms, vmax
+      real(dp),  dimension(n), intent(in)    :: v
+      real(dp),                intent(inout) :: vrms, vmax
 !
       integer :: i
-      real*8, parameter :: zero=0.0d0
+      real(dp), parameter :: zero=0.0d0
 !      
 !------------------------------------------------------------------------------
 !      
@@ -437,3 +443,4 @@ subroutine rmsvec( n, v, vrms, vmax )
 !      
 endsubroutine rmsvec
 !------------------------------------------------------------------------------
+end module jacobiDIIS

@@ -91,18 +91,28 @@
 ! (off-diagonal blocks only).
 !-------------------------------------------------------------------------------
 !
+
+module matvec
+  use jacobiDIIS, only : rmsvec
+  implicit none
+
+  public :: lx, lstarx, hnorm, ldm1x
+  private
+
+contains
+
 subroutine lx( n, x, y )
 !
       use ddcosmo , only : iprint, nylm, nsph, ngrid, lmax, zero, calcv, intrhs, &
-                           facl, prtsph
+                           facl, prtsph, dp
 !      
       implicit none 
       integer,                         intent(in)    :: n
-      real*8,  dimension(nylm,nsph), intent(in)    :: x
-      real*8,  dimension(nylm,nsph), intent(inout) :: y
+      real(dp),  dimension(nylm,nsph), intent(in)    :: x
+      real(dp),  dimension(nylm,nsph), intent(inout) :: y
       !
       integer             :: isph, istatus
-      real*8, allocatable :: pot(:), vplm(:), basloc(:), vcos(:), vsin(:)
+      real(dp), allocatable :: pot(:), vplm(:), basloc(:), vcos(:), vsin(:)
 !      
 !-------------------------------------------------------------------------------
 !
@@ -161,15 +171,15 @@ end subroutine lx
 subroutine lstarx( n, x, y )
 !
       use ddcosmo , only : iprint, nylm, nsph, ngrid, lmax, zero, basis, &
-                           adjrhs, facl, prtsph
+                           adjrhs, facl, prtsph, dp
 !      
       implicit none 
       integer,                       intent(in)    :: n
-      real*8,  dimension(nylm,nsph), intent(in)    :: x
-      real*8,  dimension(nylm,nsph), intent(inout) :: y
+      real(dp),  dimension(nylm,nsph), intent(in)    :: x
+      real(dp),  dimension(nylm,nsph), intent(inout) :: y
 !
       integer             :: isph, ig, istatus
-      real*8, allocatable :: xi(:,:), vplm(:), basloc(:), vcos(:), vsin(:)
+      real(dp), allocatable :: xi(:,:), vplm(:), basloc(:), vcos(:), vsin(:)
 !
 !-------------------------------------------------------------------------------
 !
@@ -245,13 +255,13 @@ end subroutine lstarx
 !
 subroutine ldm1x( n, x, y )
 !
-      use ddcosmo , only : nylm, nsph, facl
+      use ddcosmo , only : nylm, nsph, facl, dp
 !      
       implicit none
 !
       integer,                         intent(in)    :: n
-      real*8,  dimension(nylm,nsph), intent(in)    :: x
-      real*8,  dimension(nylm,nsph), intent(inout) :: y
+      real(dp),  dimension(nylm,nsph), intent(in)    :: x
+      real(dp),  dimension(nylm,nsph), intent(inout) :: y
 !
       integer                                        :: isph
 !
@@ -278,17 +288,17 @@ end subroutine ldm1x
 ! rms value.
 !-------------------------------------------------------------------------------
 !
-real*8 function hnorm( n, x )
+real(dp) function hnorm( n, x )
 !
-      use ddcosmo , only : nylm, nsph, hsnorm
+      use ddcosmo , only : nylm, nsph, hsnorm, dp
 !
       implicit none
       integer,                         intent(in) :: n
-      real*8,  dimension(nylm,nsph), intent(in) :: x
+      real(dp),  dimension(nylm,nsph), intent(in) :: x
 !
       integer                                     :: isph, istatus
-      real*8                                      :: vrms, vmax
-      real*8, allocatable                         :: u(:)
+      real(dp)                                      :: vrms, vmax
+      real(dp), allocatable                         :: u(:)
 !
 !-------------------------------------------------------------------------------
 !
@@ -322,3 +332,5 @@ real*8 function hnorm( n, x )
 !
 end function hnorm
 !-------------------------------------------------------------------------------
+
+end module matvec

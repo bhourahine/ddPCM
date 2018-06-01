@@ -85,12 +85,13 @@ implicit none
 !     - numerical constants
 !
       integer, parameter :: ndiis=25, iout=6, nngmax=100
-      real*8,  parameter :: zero=0.d0, pt5=0.5d0, one=1.d0, two=2.d0, four=4.d0
-      real*8,  parameter :: se = -1.0d0
+      integer, parameter :: dp = kind(0.0d0)
+      real(dp),  parameter :: zero=0.d0, pt5=0.5d0, one=1.d0, two=2.d0, four=4.d0
+      real(dp),  parameter :: se = -1.0d0
 !
 !     - numerical constants explicitly computed
 !
-      real*8  :: pi, sq2
+      real(dp)  :: pi, sq2
 !
 !     - quantities contained in control file
 !
@@ -104,7 +105,7 @@ implicit none
 !     eta        - regularization parameters
 !
       integer :: iprint, nproc, lmax, ngrid, iconv, igrad
-      real*8  :: eps, eta
+      real(dp)  :: eps, eta
 !
 !     - other quantities
 !
@@ -117,10 +118,10 @@ implicit none
 !     - workspaces
 !
       integer, allocatable :: inl(:), nl(:)
-      real*8,  allocatable :: rsph(:), csph(:,:), ccav(:,:)
-      real*8,  allocatable :: w(:), grid(:,:), basis(:,:)
-      real*8,  allocatable :: fact(:), facl(:), facs(:)
-      real*8,  allocatable :: fi(:,:), ui(:,:), zi(:,:,:)
+      real(dp),  allocatable :: rsph(:), csph(:,:), ccav(:,:)
+      real(dp),  allocatable :: w(:), grid(:,:), basis(:,:)
+      real(dp),  allocatable :: fact(:), facl(:), facs(:)
+      real(dp),  allocatable :: fi(:,:), ui(:,:), zi(:,:,:)
 !
 !     - miscellanea
 !
@@ -163,13 +164,13 @@ subroutine ddinit(n,x,y,z,rvdw)
 !     assemble the cavity and the various associated geometrical quantities.
 !
       integer,               intent(in) :: n
-      real*8,  dimension(n), intent(in) :: x, y, z, rvdw
+      real(dp),  dimension(n), intent(in) :: x, y, z, rvdw
 !
       integer :: isph, jsph, i, ii, lnl, l, ind, m, igrid, inear, jnear
       integer :: istatus
-      real*8  :: fac, fl, ffl, fnorm, d2, r2, v(3), vv, t, xt, swthr
+      real(dp)  :: fac, fl, ffl, fnorm, d2, r2, v(3), vv, t, xt, swthr
 !
-      real*8,  allocatable :: vcos(:), vsin(:), vplm(:)
+      real(dp),  allocatable :: vcos(:), vsin(:), vplm(:)
       integer, parameter   :: nllg=32
 !
       integer, dimension(nllg) :: ng0
@@ -528,14 +529,14 @@ end subroutine memfree
 !
 !
 !---------------------------------------------------------------------------------
-real*8 function sprod(n,u,v)
+real(dp) function sprod(n,u,v)
 !        
       implicit none
       integer,               intent(in) :: n
-      real*8,  dimension(n), intent(in) :: u, v
+      real(dp),  dimension(n), intent(in) :: u, v
 !
       integer :: i
-      real*8  :: ss
+      real(dp)  :: ss
 !---------------------------------------------------------------------------------
 !
 !     initialize
@@ -563,15 +564,15 @@ end function sprod
 !------------------------------------------------------------------------------------------------
 ! Purpose : switch function (5th degree polynomial)
 !------------------------------------------------------------------------------------------------
-real*8 function fsw( t, s, eta )
+real(dp) function fsw( t, s, eta )
 !
       implicit none
-      real*8, intent(in) :: t
-      real*8, intent(in) :: s
-      real*8, intent(in) :: eta
+      real(dp), intent(in) :: t
+      real(dp), intent(in) :: s
+      real(dp), intent(in) :: eta
 !
-      real*8 :: a, b, flow, x
-      real*8, parameter :: f6=6.0d0, f10=10.d0, f12=12.d0, f15=15.d0
+      real(dp) :: a, b, flow, x
+      real(dp), parameter :: f6=6.0d0, f10=10.d0, f12=12.d0, f15=15.d0
 !
 !------------------------------------------------------------------------------------------------
 !
@@ -613,15 +614,15 @@ end function fsw
 !------------------------------------------------------------------------------------------------
 ! Purpose : first derivative of switch function
 !------------------------------------------------------------------------------------------------
-real*8 function dfsw( t, s, eta )
+real(dp) function dfsw( t, s, eta )
 !
       implicit none
-      real*8, intent(in) :: t
-      real*8, intent(in) :: s
-      real*8, intent(in) :: eta
+      real(dp), intent(in) :: t
+      real(dp), intent(in) :: s
+      real(dp), intent(in) :: eta
 !      
-      real*8  flow, x
-      real*8, parameter :: f30=30.0d0
+      real(dp)  flow, x
+      real(dp), parameter :: f30=30.0d0
 !
 !------------------------------------------------------------------------------------------------
 !
@@ -670,7 +671,7 @@ subroutine ptcart( label, ncol, icol, x )
 !
       character (len=*), intent(in) :: label
       integer, intent(in)           :: ncol, icol
-      real*8, dimension(ngrid,ncol), intent(in) :: x
+      real(dp), dimension(ngrid,ncol), intent(in) :: x
 !
       integer :: ig, noff, nprt, ic, j
 !
@@ -678,7 +679,7 @@ subroutine ptcart( label, ncol, icol, x )
 !
 !     print header :
       if (ncol.eq.1) then
-        write (iout,'(3x,a,1x,"(column ",i4")")') label, icol
+        write (iout,'(3x,a,1x,"(column ",i4,")")') label, icol
       else
         write (iout,'(3x,a)') label
       endif
@@ -727,7 +728,7 @@ subroutine prtsph(label,ncol,icol,x)
 !
       character (len=*), intent(in) :: label
       integer, intent(in)           :: ncol, icol
-      real*8, dimension(nylm,ncol), intent(in) :: x
+      real(dp), dimension(nylm,ncol), intent(in) :: x
 !
       integer :: l, m, ind, noff, nprt, ic, j
 !
@@ -735,7 +736,7 @@ subroutine prtsph(label,ncol,icol,x)
 !
 !     print header :
       if (ncol.eq.1) then
-        write (iout,'(3x,a,1x,"(column ",i4")")') label, icol
+        write (iout,'(3x,a,1x,"(column ",i4,")")') label, icol
       else
         write (iout,'(3x,a)') label
       endif
@@ -790,8 +791,8 @@ subroutine intrhs( isph, x, xlm )
 !        
       implicit none
       integer, intent(in) :: isph
-      real*8, dimension(ngrid),  intent(in)    :: x
-      real*8, dimension(nylm), intent(inout) :: xlm
+      real(dp), dimension(ngrid),  intent(in)    :: x
+      real(dp), dimension(nylm), intent(inout) :: xlm
 !
       integer :: ig
 !      
@@ -830,12 +831,12 @@ end subroutine intrhs
 subroutine ylmbas( x, basloc, vplm, vcos, vsin )
 !        
       implicit none
-      real*8, dimension(3), intent(in) :: x
-      real*8, dimension(nylm), intent(out) :: basloc, vplm
-      real*8, dimension(lmax+1), intent(out) :: vcos, vsin
+      real(dp), dimension(3), intent(in) :: x
+      real(dp), dimension(nylm), intent(out) :: basloc, vplm
+      real(dp), dimension(lmax+1), intent(out) :: vcos, vsin
 !
       integer :: l, m, ind
-      real*8  :: cthe, sthe, cphi, sphi, plm
+      real(dp)  :: cthe, sthe, cphi, sphi, plm
 !      
 !------------------------------------------------------------------------------------------------
 !
@@ -904,14 +905,14 @@ end subroutine ylmbas
 subroutine dbasis( x, basloc, dbsloc, vplm, vcos, vsin )
 !
       implicit none
-      real*8, dimension(3),        intent(in)    :: x
-      real*8, dimension(nylm),   intent(inout) :: basloc, vplm
-      real*8, dimension(3,nylm), intent(inout) :: dbsloc
-      real*8, dimension(lmax+1),   intent(inout) :: vcos, vsin
+      real(dp), dimension(3),        intent(in)    :: x
+      real(dp), dimension(nylm),   intent(inout) :: basloc, vplm
+      real(dp), dimension(3,nylm), intent(inout) :: dbsloc
+      real(dp), dimension(lmax+1),   intent(inout) :: vcos, vsin
 !
       integer :: l, m, ind, VC, VS
-      real*8  :: cthe, sthe, cphi, sphi, plm, fln, pp1, pm1, pp
-      real*8  :: et(3), ep(3)
+      real(dp)  :: cthe, sthe, cphi, sphi, plm, fln, pp1, pm1, pp
+      real(dp)  :: et(3), ep(3)
 !
 !------------------------------------------------------------------------------------------------
 !
@@ -1056,11 +1057,11 @@ end subroutine dbasis
 subroutine polleg( x, y, plm )
 !          
       implicit none
-      real*8,                    intent(in)    :: x, y
-      real*8, dimension(nylm), intent(inout) :: plm
+      real(dp),                    intent(in)    :: x, y
+      real(dp), dimension(nylm), intent(inout) :: plm
 !
       integer :: m, ind, l, ind2
-      real*8  :: fact, pmm, somx2, pmm1, pmmo, pll, fm, fl
+      real(dp)  :: fact, pmm, somx2, pmm1, pmmo, pll, fm, fl
 !------------------------------------------------------------------------------------------------
 !
       fact  = one
@@ -1103,8 +1104,8 @@ end subroutine polleg
 subroutine trgev( x, y, cx, sx )
         
       implicit none
-      real*8, intent(in) :: x, y
-      real*8, dimension( max((lmax+1),2) ), intent(inout) :: cx, sx
+      real(dp), intent(in) :: x, y
+      real(dp), dimension( max((lmax+1),2) ), intent(inout) :: cx, sx
 !
       integer :: m
 !
@@ -1137,14 +1138,14 @@ end subroutine trgev
 !           which is need to compute action of COSMO matrix L.
 !------------------------------------------------------------------------------------------------
 !
-real*8 function intmlp( t, sigma, basloc )
+real(dp) function intmlp( t, sigma, basloc )
 !  
       implicit none
-      real*8, intent(in) :: t
-      real*8, dimension(nylm), intent(in) :: sigma, basloc
+      real(dp), intent(in) :: t
+      real(dp), dimension(nylm), intent(in) :: sigma, basloc
 !
       integer :: l, ind
-      real*8  :: tt, ss, fac
+      real(dp)  :: tt, ss, fac
 !
 !------------------------------------------------------------------------------------------------
 !
@@ -1188,8 +1189,8 @@ subroutine wghpot( phi, g )
 !
       implicit none
 !
-      real*8, dimension(ncav),       intent(in)  :: phi
-      real*8, dimension(ngrid,nsph), intent(out) :: g
+      real(dp), dimension(ncav),       intent(in)  :: phi
+      real(dp), dimension(ngrid,nsph), intent(out) :: g
 !
       integer isph, ig, ic
 !
@@ -1233,11 +1234,11 @@ end subroutine wghpot
 subroutine hsnorm( u, unorm )
 !          
       implicit none
-      real*8, dimension(nylm), intent(in)    :: u
-      real*8,                    intent(inout) :: unorm
+      real(dp), dimension(nylm), intent(in)    :: u
+      real(dp),                    intent(inout) :: unorm
 !
       integer :: l, m, ind
-      real*8  :: fac
+      real(dp)  :: fac
 !
 !------------------------------------------------------------------------------------------------
 !
@@ -1302,13 +1303,13 @@ subroutine adjrhs( isph, xi, vlm, basloc, vplm, vcos, vsin )
 !
       implicit none
       integer,                       intent(in)    :: isph
-      real*8, dimension(ngrid,nsph), intent(in)    :: xi
-      real*8, dimension(nylm),     intent(inout) :: vlm
-      real*8, dimension(nylm),     intent(inout) :: basloc, vplm
-      real*8, dimension(lmax+1),     intent(inout) :: vcos, vsin
+      real(dp), dimension(ngrid,nsph), intent(in)    :: xi
+      real(dp), dimension(nylm),     intent(inout) :: vlm
+      real(dp), dimension(nylm),     intent(inout) :: basloc, vplm
+      real(dp), dimension(lmax+1),     intent(inout) :: vcos, vsin
 !
       integer :: ij, jsph, ig, l, ind, m
-      real*8  :: vji(3), vvji, tji, sji(3), xji, oji, fac, ffac, t
+      real(dp)  :: vji(3), vvji, tji, sji(3), xji, oji, fac, ffac, t
 !      
 !-----------------------------------------------------------------------------------
 !
@@ -1437,16 +1438,16 @@ subroutine fdoka( isph, sigma, xi, basloc, dbsloc, vplm, vcos, vsin, fx )
 !        
       implicit none
       integer,                         intent(in)    :: isph
-      real*8,  dimension(nylm,nsph), intent(in)    :: sigma
-      real*8,  dimension(ngrid),       intent(in)    :: xi
-      real*8,  dimension(nylm),      intent(inout) :: basloc, vplm
-      real*8,  dimension(3,nylm),    intent(inout) :: dbsloc
-      real*8,  dimension(lmax+1),      intent(inout) :: vcos, vsin
-      real*8,  dimension(3),           intent(inout) :: fx
+      real(dp),  dimension(nylm,nsph), intent(in)    :: sigma
+      real(dp),  dimension(ngrid),       intent(in)    :: xi
+      real(dp),  dimension(nylm),      intent(inout) :: basloc, vplm
+      real(dp),  dimension(3,nylm),    intent(inout) :: dbsloc
+      real(dp),  dimension(lmax+1),      intent(inout) :: vcos, vsin
+      real(dp),  dimension(3),           intent(inout) :: fx
 !
       integer :: ig, ij, jsph, l, ind, m
-      real*8  :: vvij, tij, xij, oij, t, fac, fl, f1, f2, f3, beta, tlow, thigh
-      real*8  :: vij(3), sij(3), alp(3), va(3)
+      real(dp)  :: vvij, tij, xij, oij, t, fac, fl, f1, f2, f3, beta, tlow, thigh
+      real(dp)  :: vij(3), sij(3), alp(3), va(3)
 !      
 !-----------------------------------------------------------------------------------
 !    
@@ -1512,18 +1513,18 @@ subroutine fdokb( isph, sigma, xi, basloc, dbsloc, vplm, vcos, vsin, fx )
 !        
       implicit none
       integer,                         intent(in)    :: isph
-      real*8,  dimension(nylm,nsph), intent(in)    :: sigma
-      real*8,  dimension(ngrid,nsph),  intent(in)    :: xi
-      real*8,  dimension(nylm),      intent(inout) :: basloc, vplm
-      real*8,  dimension(3,nylm),    intent(inout) :: dbsloc
-      real*8,  dimension(lmax+1),      intent(inout) :: vcos, vsin
-      real*8,  dimension(3),           intent(inout) :: fx
+      real(dp),  dimension(nylm,nsph), intent(in)    :: sigma
+      real(dp),  dimension(ngrid,nsph),  intent(in)    :: xi
+      real(dp),  dimension(nylm),      intent(inout) :: basloc, vplm
+      real(dp),  dimension(3,nylm),    intent(inout) :: dbsloc
+      real(dp),  dimension(lmax+1),      intent(inout) :: vcos, vsin
+      real(dp),  dimension(3),           intent(inout) :: fx
 !
       integer :: ig, ji, jsph, l, ind, m, jk, ksph
       logical :: proc
-      real*8  :: vvji, tji, xji, oji, t, fac, fl, f1, f2, beta, di, tlow, thigh
-      real*8  :: b, g1, g2, vvjk, tjk, f, xjk
-      real*8  :: vji(3), sji(3), alp(3), vb(3), vjk(3), sjk(3), vc(3)
+      real(dp)  :: vvji, tji, xji, oji, t, fac, fl, f1, f2, beta, di, tlow, thigh
+      real(dp)  :: b, g1, g2, vvjk, tjk, f, xjk
+      real(dp)  :: vji(3), sji(3), alp(3), vb(3), vjk(3), sjk(3), vc(3)
 !
 !-----------------------------------------------------------------------------------
 !
@@ -1615,12 +1616,12 @@ subroutine fdoga( isph, xi, phi, fx )
 !        
       implicit none
       integer,                        intent(in)    :: isph
-      real*8,  dimension(ngrid,nsph), intent(in)    :: xi, phi
-      real*8,  dimension(3),          intent(inout) :: fx
+      real(dp),  dimension(ngrid,nsph), intent(in)    :: xi, phi
+      real(dp),  dimension(3),          intent(inout) :: fx
 !
       integer :: ig, ji, jsph
-      real*8  :: vvji, tji, fac, swthr
-      real*8  :: alp(3), vji(3), sji(3)
+      real(dp)  :: vvji, tji, fac, swthr
+      real(dp)  :: alp(3), vji(3), sji(3)
 !
 !-----------------------------------------------------------------------------------
 !
@@ -1672,16 +1673,16 @@ subroutine calcv( first, isph, pot, sigma, basloc, vplm, vcos, vsin )
 !
       logical,                        intent(in)    :: first
       integer,                        intent(in)    :: isph
-      real*8, dimension(nylm,nsph), intent(in)    :: sigma
-      real*8, dimension(ngrid),       intent(inout) :: pot
-      real*8, dimension(nylm),      intent(inout) :: basloc
-      real*8, dimension(nylm),      intent(inout) :: vplm
-      real*8, dimension(lmax+1),      intent(inout) :: vcos
-      real*8, dimension(lmax+1),      intent(inout) :: vsin
+      real(dp), dimension(nylm,nsph), intent(in)    :: sigma
+      real(dp), dimension(ngrid),       intent(inout) :: pot
+      real(dp), dimension(nylm),      intent(inout) :: basloc
+      real(dp), dimension(nylm),      intent(inout) :: vplm
+      real(dp), dimension(lmax+1),      intent(inout) :: vcos
+      real(dp), dimension(lmax+1),      intent(inout) :: vsin
 !
       integer :: its, ij, jsph
-      real*8  :: vij(3), sij(3)
-      real*8  :: vvij, tij, xij, oij, stslm, stslm2, stslm3
+      real(dp)  :: vij(3), sij(3)
+      real(dp)  :: vvij, tij, xij, oij, stslm, stslm2, stslm3
 !
 !------------------------------------------------------------------------
 !
@@ -1757,8 +1758,8 @@ end subroutine calcv
 !------------------------------------------------------------------------
 subroutine ddmkxi( s, xi)
 !
-       real*8, dimension(nylm,nsph), intent(in)    :: s
-       real*8, dimension(ncav),      intent(inout) :: xi
+       real(dp), dimension(nylm,nsph), intent(in)    :: s
+       real(dp), dimension(ncav),      intent(inout) :: xi
 !
        integer :: its, isph, ii
 !
@@ -1786,8 +1787,8 @@ end subroutine ddmkxi
 !------------------------------------------------------------------------
 subroutine ddmkzeta( s, zeta)
 !
-       real*8, dimension(nylm,nsph), intent(in)    :: s
-       real*8, dimension(ncav),      intent(inout) :: zeta
+       real(dp), dimension(nylm,nsph), intent(in)    :: s
+       real(dp), dimension(ncav),      intent(inout) :: zeta
 !
        integer :: its, isph, ii
 !

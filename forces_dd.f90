@@ -1,5 +1,3 @@
-subroutine forces_dd(n,phi,sigma,s,fx)
-use ddcosmo
 ! 
 !      888      888  .d8888b.   .d88888b.   .d8888b.  888b     d888  .d88888b.  
 !      888      888 d88P  Y88b d88P" "Y88b d88P  Y88b 8888b   d8888 d88P" "Y88b 
@@ -82,18 +80,27 @@ use ddcosmo
 ! Sample driver for the calculation of the ddCOSMO forces.                     !
                                                                                !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+module forcesExample
+
+use ddcosmo
 implicit none
+private
+public :: forces_dd
+
+contains
+
+subroutine forces_dd(n,phi,sigma,s,fx)
 !
 integer,                         intent(in)    :: n
-real*8,  dimension(ncav),        intent(in)    :: phi
-real*8,  dimension(nylm,nsph),   intent(in)    :: sigma, s
-real*8,  dimension(3,n),         intent(inout) :: fx
+real(dp),  dimension(ncav),        intent(in)    :: phi
+real(dp),  dimension(nylm,nsph),   intent(in)    :: sigma, s
+real(dp),  dimension(3,n),         intent(inout) :: fx
 !
 integer :: isph, ig, ii, c1, c2, cr
-real*8  :: fep
+real(dp)  :: fep
 !
-real*8, allocatable :: xi(:,:), phiexp(:,:), zeta(:), ef(:,:)
-real*8, allocatable :: basloc(:), dbsloc(:,:), vplm(:), vcos(:), vsin(:)
+real(dp), allocatable :: xi(:,:), phiexp(:,:), zeta(:), ef(:,:)
+real(dp), allocatable :: basloc(:), dbsloc(:,:), vplm(:), vcos(:), vsin(:)
 !
 allocate (xi(ngrid,nsph),phiexp(ngrid,nsph))
 allocate (basloc(nylm),dbsloc(3,nylm),vplm(nylm),vcos(lmax+1),vsin(lmax+1))
@@ -155,10 +162,12 @@ end if
 !
 deallocate (xi,phiexp)
 !
-! scale the forces time the cosmo factor:
+! scale the forces times the cosmo factor:
 !
 fep = pt5*(eps-one)/eps
 fx  = fep*fx
 !
 return
-end
+end subroutine forces_dd
+
+end module forcesExample
